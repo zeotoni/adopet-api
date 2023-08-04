@@ -1,6 +1,8 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -36,8 +38,16 @@ export class UserService {
   }
 
   async create(user: User): Promise<User> {
-    const res = await this.userModel.create(user);
-    return res;
+    try {
+      const res = await this.userModel.create(user);
+      return res;
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new ConflictException('O email já existe');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
   }
 
   async updateById(id: string, userData: User): Promise<User> {

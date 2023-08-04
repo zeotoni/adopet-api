@@ -1,10 +1,4 @@
-import {
-  IsString,
-  IsNotEmpty,
-  MaxLength,
-  MinLength,
-  IsOptional,
-} from 'class-validator';
+import { IsString, IsOptional } from 'class-validator';
 
 export class UpdateUserDto {
   @IsString({ message: 'O nome deve estar em um formato válido!' })

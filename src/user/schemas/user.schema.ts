@@ -7,7 +7,7 @@ export class User {
   @Prop()
   name: string;
 
-  @Prop()
+  @Prop({ unique: [true, 'Email duplicado digitado!'] })
   email: string;
 
   @Prop()
